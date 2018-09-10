@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+  <div class="row">
+
+
+    <div class="col-6 col-info">
+
+      {# templates/default/new.html.twig #}
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      {{ form_end(form) }}
+
+
+
+
+    </div>
+
+    <div class="col-6">
+
+
+
+          <input class="form-control mr-sm-2" id="input_search" type="text" class="btn btn-secondary" placeholder="Search" aria-label="Search">
+          <button id="bt_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+          <div id="results">
+
+          </div>
+
+          <div id="mapid"></div>
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+<script>
+
+    initMapPicker();
+
+</script>
+
+{% endblock %}

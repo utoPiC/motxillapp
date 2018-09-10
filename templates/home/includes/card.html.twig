@@ -1,0 +1,18 @@
+
+        <div class="col-md-3">
+          <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{point.name}}</h4>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+
+                <ul>
+                  <li>Start date: {{point.startDate |date("m/d/Y") }}</li>
+                  <li> {{ include('home/includes/poi_type.html.twig', { 'point_type': point.pointType }) }}</li>
+                </ul>
+
+              <p></p>
+            </div>
+          </div>
+        </div>

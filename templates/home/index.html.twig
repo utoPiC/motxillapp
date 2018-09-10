@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+
+
+        <div class="col-1 col-info">
+
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ path('create_poi') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('create_poi') }}">Create POIT</a>
+            </li>
+
+
+
+          </ul>
+
+          <ul class="nav flex-column">
+
+
+            {% set color =['red','yellow','green','blue','purple','gray']%}
+
+          {% for i in range(1,6) %}
+
+              <li class="nav-item">  <i style="color:{{color[i-1]}};" class="fas fa-map-marker"></i></li>
+
+          {% endfor %}
+        </ul>
+
+
+        </div>
+        <div class="col-7 col-activities">
+
+
+          {{ include('home/includes/calendar.html.twig') }}
+
+
+            <br/>
+            <h1 class="dark_shades">Planificació</h1>
+            <hr/>
+
+            <div class="row calendar">
+
+            {% for i in range(1, week_offset-1) %}
+            <div class="col-2">
+              <div class="card">
+                <div class="card-body">
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+
+
+            {% for key,day in days %}
+
+            <div class="col-2">
+              <div class="card">
+                <div class="card-header">
+                  {{key}}
+                </div>
+                <div class="card-body">
+                  {% if calendar_pois[key] is defined %}
+                        {% for cal in calendar_pois[key] %}
+                        <i class="fas fa-{{cal.pointType.icon}}"></i>  <span class="label label-primary">{{cal.name}}</span>
+                        {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            {% endfor %}
+          </div>
+
+          <br/>
+          <h1 class="dark_shades">Llocs d'interès, transport, etc...</h1>
+          <hr/>
+
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{{ path('home',{'poi_type':'all'}) }}" class="btn {% if selected_poi_type == 'all'%}btn-dark{% else %}btn-secondary{% endif %}">Tots</a>
+            {% for poi_type in poi_type_list %}
+              <a href="{{ path('home',{'poi_type':poi_type.id}) }}" class="btn {% if ( selected_poi_type | number_format) == poi_type.id %}btn-dark{% else %}btn-secondary{% endif %}"><i class="fas fa-{{poi_type.icon}}"></i> {{poi_type.name}}</a>
+            {% endfor %}
+
+          </div>
+
+          <br/><br/>
+
+          <div class="row">
+
+
+
+
+            {% for point in points %}
+
+                {{ include('home/includes/card.html.twig', { 'point': point }) }}
+
+            {% endfor %}
+
+          </div>
+
+
+
+        </div>
+        <div class="col-4">
+          <div id="mapid"></div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>
+
+    initHome();
+
+</script>
+
+{% endblock %}
